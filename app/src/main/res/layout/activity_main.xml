@@ -75,6 +75,18 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/finalizar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="#2196F3"
+        android:text="Finalizar compra"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="400dp"
+        android:textColor="#fff"
+        android:onClick="finishBuy"
+        />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

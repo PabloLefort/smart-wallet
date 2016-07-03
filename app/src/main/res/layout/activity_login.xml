@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#3d3d3d"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#3d3d3d"
+            android:paddingTop="56dp"
+            android:paddingBottom="22dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0"
+                android:minHeight="150dp"
+                android:minWidth="150dp">
+
+                <ImageView android:src="@drawable/logo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginBottom="24dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="56dp"
+            android:paddingBottom="24dp"
+            android:measureWithLargestChild="true"
+            android:background="#3d3d3d"
+            android:baselineAligned="true">
+
+
+            <!-- Name Label -->
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"></android.support.design.widget.TextInputLayout>
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:layout_width="338dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:padding="12dp"
+                android:background="@drawable/facebook_button" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_login2"
+                android:layout_width="338dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:padding="12dp"
+                android:background="@drawable/google_button" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_login3"
+                android:layout_width="338dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:padding="12dp"
+                android:background="@drawable/twitter_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
