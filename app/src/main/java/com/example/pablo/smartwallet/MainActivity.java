@@ -1,5 +1,6 @@
 package com.example.pablo.smartwallet;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,23 +8,26 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class MainActivity extends AppCompatActivity {
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private ZXingScannerView mScannerView;
-    Integer response = 0;
+    private static final int SCAN_QR_ACTIVITY_REQUEST_CODE = 200;
+    private static String[][] datos = new String[0][2];
+    private static CardView card;
+    private static TextView txtnombre;
+    private static TextView txtprecio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,74 +37,23 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        txtnombre = (TextView) findViewById(R.id.nombre);
+        txtprecio = (TextView) findViewById(R.id.precio);
+        card = (CardView) findViewById(R.id.cv);
+        card.setVisibility(View.GONE);
 
-        final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
 
-        final MainActivity self = this;
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-                //QrScanner(view);
-
-                mScannerView = new ZXingScannerView(self);
-                setContentView(mScannerView);
-                mScannerView.setResultHandler(self);
-                mScannerView.startCamera();
-            }
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(response == 1) {
-            mScannerView = null;
-            mScannerView = new ZXingScannerView(this);
-            setContentView(mScannerView);
-            response = 0;
-
-        }
-        if(mScannerView != null){
-            mScannerView.setResultHandler(this);
-            mScannerView.startCamera();
-        }
+        //recycler.setHasFixedSize(true);
+        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        //mScannerView.stopCamera();   // Stop camera on pause
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        /*if(mScannerView != null){
-            mScannerView.stopCamera();
-            mScannerView = null;
-        }*/
-    }
-
-    @Override
-    public void handleResult(Result rawResult) {
-        mScannerView.stopCameraPreview();
-        mScannerView.stopCamera();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan Result");
-        builder.setMessage(rawResult.getText());
-        AlertDialog alert1 = builder.create();
-        alert1.show();
-
-        // If you would like to resume scanning, call this method below:
-        // mScannerView.resumeCameraPreview(this);
+    public void scanQr(View view){
+        Intent scanIntent = new Intent(this, ScanCodeActivity.class);
+        scanIntent.putExtra("nombre", "");
+        scanIntent.putExtra("precio", 0);
+        startActivityForResult(scanIntent, SCAN_QR_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -114,6 +67,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 // User cancelled the image capture
             } else {
                 // Image capture failed, advise user
+            }
+        }
+
+        if(requestCode == SCAN_QR_ACTIVITY_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                card.setVisibility(View.VISIBLE);
+                txtnombre.setText("Prenda: "+data.getStringExtra("nombre"));
+                txtprecio.setText("Precio: "+data.getStringExtra("precio"));
             }
         }
     }
